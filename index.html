@@ -47,6 +47,11 @@
   .site-head.mari .ui-btn--primary { background: var(--brand-green); color: #fff; }
   .chapters.mari a.active i { background: var(--ink); border-color: var(--ink); }
   .head-actions { display: flex; gap: 12px; align-items: center; }
+  .head-nav { display: flex; gap: 24px; margin-right: 12px; }
+  .head-nav a { color: var(--ink); font-weight: 600; text-decoration: none; transition: color .4s; }
+  .head-nav a:hover { text-decoration: underline; text-underline-offset: 6px; text-decoration-color: var(--marigold); }
+  .head-nav a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; border-radius: 4px; }
+  .site-head.dark .head-nav a { color: #fff; }
   .site-head .ui-btn { min-height: 44px; }
   .site-head .ui-btn:focus-visible { outline-color: var(--ink); }
   .site-head.dark .ui-btn:focus-visible { outline-color: var(--marigold); }
@@ -131,7 +136,11 @@
   .stories { background: var(--surface); padding: 160px 0; }
   .stories__head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 56px; }
   .stories__head h2 { margin: 12px 0 0; font-size: clamp(36px, 4vw, 56px); line-height: 1.05; letter-spacing: -0.02em; font-weight: 800; }
-  .stories__grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 24px; }
+  .stories__grid { display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; padding-bottom: 8px; margin-bottom: -8px; }
+  .stories__grid::-webkit-scrollbar { display: none; }
+  .stories__grid > .scard { flex: 0 0 calc((100% - 72px) / 3.25); min-width: 0; scroll-snap-align: start; }
+  .stories__actions { display: flex; align-items: center; gap: 10px; }
+  .stories__actions .ui-btn { margin-right: 6px; }
   .scard { position: relative; display: flex; flex-direction: column; gap: 14px; padding: 32px; border-radius: var(--radius-lg); background: var(--surface-alt); min-height: 440px; overflow: hidden; transition: transform .3s ease, box-shadow .3s ease; }
   .scard:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); }
   .scard--green { background: var(--brand-green); color: #fff; }
@@ -139,7 +148,7 @@
   .scard h3 { margin: 0; font-size: 26px; line-height: 32px; font-weight: 800; letter-spacing: -.25px; }
   .scard p { margin: 0; }
   .scard .src { font-size: 14px; line-height: 22px; opacity: .75; margin-top: auto; }
-  .num { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; font-size: clamp(56px, 5.6vw, 96px); line-height: .95; letter-spacing: -0.04em; font-weight: 800; margin: 12px 0; font-variant-numeric: tabular-nums; }
+  .num { display: flex; flex-wrap: nowrap; white-space: nowrap; align-items: baseline; gap: 4px 12px; font-size: clamp(48px, 4.6vw, 80px); line-height: .95; letter-spacing: -0.04em; font-weight: 800; margin: 12px 0; font-variant-numeric: tabular-nums; }
   .num .from { font-weight: 300; opacity: .55; position: relative; }
   .num .from::after { content: ""; position: absolute; left: -4%; right: -4%; top: 52%; height: 6px; background: var(--marigold); transform: scaleX(var(--strike, 1)); transform-origin: left; border-radius: 3px; }
   .num .to { color: var(--marigold); }
@@ -170,6 +179,52 @@
   .poll__quote { margin: 40px 0 0; max-width: 30em; padding-top: 24px; border-top: 1px solid var(--line); font-size: 24px; line-height: 34px; font-weight: 300; color: var(--ink); }
   .poll__quote strong { font-weight: 800; }
   .poll__quote cite { display: block; margin-top: 10px; font-style: normal; font-size: 14px; line-height: 22px; color: var(--ink-muted); }
+  .poll__head { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .poll__nav { display: flex; align-items: center; gap: 10px; }
+  .poll__count { font-size: 14px; font-weight: 600; letter-spacing: 1px; color: var(--ink-muted); margin-right: 6px; font-variant-numeric: tabular-nums; }
+  .poll__count b { color: var(--ink); }
+  .poll__arrow { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--ink); background: transparent; color: var(--ink); display: grid; place-items: center; cursor: pointer; transition: background-color .2s, color .2s, opacity .2s; }
+  .poll__arrow svg { width: 22px; height: 22px; }
+  .poll__arrow:hover:not(:disabled) { background: var(--ink); color: #fff; }
+  .poll__arrow:disabled { opacity: .3; cursor: default; }
+  .poll__arrow:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+  .poll__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; margin-top: 12px; }
+  .poll__track::-webkit-scrollbar { display: none; }
+  .poll__slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; padding-right: 24px; }
+  .poll__topic { display: inline-block; margin-top: 12px; padding: 6px 12px; border-radius: 999px; background: var(--marigold); color: var(--on-marigold); font-size: 13px; line-height: 16px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; }
+  .poll__context { margin: 16px 0 0; max-width: 34em; font-size: 20px; line-height: 30px; color: var(--ink-muted); }
+  .poll__dots { display: flex; gap: 10px; margin-top: 8px; }
+  .poll__dots button { width: 10px; height: 10px; padding: 0; border-radius: 999px; border: 1.5px solid var(--ink); background: transparent; cursor: pointer; transition: width .3s, background-color .3s; }
+  .poll__dots button[aria-selected="true"] { width: 32px; background: var(--ink); }
+  .poll__dots button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+
+  /* ---------- 6b. Instagram feed ---------- */
+  .insta { background: var(--surface); padding: 160px 0; }
+  .insta__head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
+  .insta h2 { margin: 12px 0 0; font-size: clamp(36px, 4vw, 56px); line-height: 1.05; letter-spacing: -0.02em; }
+  .insta h2 .l { font-weight: 300; } .insta h2 .b { font-weight: 800; }
+  .insta__lede { margin: 12px 0 0; color: var(--ink-muted); font-size: 20px; line-height: 30px; }
+  .insta__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .ipost { position: relative; aspect-ratio: 1 / 1; max-width: 100%; border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 9%; text-decoration: none; transition: transform .3s ease, box-shadow .3s ease; }
+  .ipost:hover { transform: translateY(-4px) scale(1.01); box-shadow: var(--shadow-card); }
+  .ipost:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 4px; }
+  .ipost--green { background: var(--brand-green); color: #fff; }
+  .ipost--cream { background: var(--surface-alt); color: var(--ink); }
+  .ipost--marigold { background: var(--marigold); color: var(--on-marigold); }
+  .ipost__eyebrow { position: absolute; top: 9%; left: 9%; font-size: 12px; font-weight: 600; letter-spacing: 1.4px; text-transform: uppercase; color: var(--marigold-text); }
+  .ipost--green .ipost__eyebrow { color: var(--marigold); }
+  .ipost--marigold .ipost__eyebrow { color: var(--ink); }
+  .ipost__h { font-size: clamp(22px, 2.3vw, 32px); line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; }
+  .ipost__h--sm { font-size: clamp(16px, 1.5vw, 20px); line-height: 1.25; letter-spacing: 0; }
+  .ipost__h .l { font-weight: 300; } .ipost__h .b { font-weight: 800; }
+  .ipost--green .ipost__h .b { color: var(--marigold); }
+  .ipost__big { font-size: clamp(40px, 4.6vw, 64px); line-height: 1; font-weight: 800; letter-spacing: -0.03em; }
+  .ipost--green .ipost__big { color: var(--marigold); }
+  .ipost__mark { position: absolute; left: 9%; bottom: 8%; width: 28px; height: 28px; border-radius: 50%; background: var(--marigold) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M 13 47 C 26 74, 52 82, 69 66 C 77 58, 82 44, 86 22 L 75 23 C 72 40, 67 51, 61 57 C 47 70, 28 66, 13 47 Z' fill='%2310393B'/%3E%3C/svg%3E") center / 100% no-repeat; }
+  .ipost--marigold .ipost__mark { background-color: var(--surface); }
+  .ipost img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ipost--live { padding: 0; background: var(--surface-alt); }
+  .insta__note { margin: 16px 0 0; font-size: 14px; line-height: 22px; color: var(--ink-muted); }
 
   /* ---------- 7. Finale ---------- */
   .finale { position: relative; background: var(--brand-green); color: #fff; padding: 180px 0 0; overflow: hidden; }
@@ -179,12 +234,10 @@
   .finale__actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
   .finale .ui-btn--secondary { color: #fff; border-color: #fff; }
   .finale .ui-btn:focus-visible { outline-color: var(--marigold); }
-  .channels { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; max-width: 900px; margin: 56px auto 0; padding: 0; list-style: none; }
-  .channels li { flex: 0 1 calc((100% - 24px) / 3); min-width: 0; }
-  .channels a { display: flex; flex-direction: column; gap: 2px; padding: 16px 20px; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,.22); color: #fff; text-decoration: none; transition: background-color .2s, border-color .2s; }
-  .channels a b { font-weight: 600; }
-  .channels a span { font-size: 14px; line-height: 22px; color: var(--marigold); }
-  .channels a:hover { background: rgba(255,255,255,.07); border-color: var(--marigold); }
+  .channels { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 36px; margin: 48px auto 0; padding: 0; list-style: none; }
+  .channels a { display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 600; opacity: .9; transition: color .2s, opacity .2s; }
+  .channels a svg { width: 22px; height: 22px; flex: none; }
+  .channels a:hover { color: var(--marigold); opacity: 1; }
   .foot__id { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; max-width: 30em; }
   .foot__id p { margin: 0; opacity: .8; }
   .channels a:focus-visible { outline: 2px solid var(--marigold); outline-offset: 3px; border-radius: 4px; }
@@ -209,6 +262,7 @@
     .site-head .logo, .site-head .logo img { height: 28px; }
     .site-head .ui-btn { min-height: 40px; padding: 0 16px; font-size: 15px; }
     .head-actions .ui-btn--secondary { display: none; }
+    .head-nav { display: none; }
     .wrap { padding: 0 16px; }
     .journey__head { position: static; padding: 96px 0 0; }
     .track { flex-direction: column; width: auto; padding: 40px 16px 96px; gap: 24px; }
@@ -218,10 +272,20 @@
     .sky { display: none; }
     .stories, .poll, .work { padding: 96px 0; }
     .work__grid { grid-template-columns: 1fr; }
-    .channels li { flex-basis: calc((100% - 12px) / 2); }
+    .channels { gap: 14px 24px; }
     .hero__cue { left: max(16px, env(safe-area-inset-left, 0px)); bottom: 24px; }
     .poll__quote { font-size: 20px; line-height: 30px; }
-    .stories__grid { grid-template-columns: 1fr; }
+    .poll__context { font-size: 17px; line-height: 26px; }
+    .poll__count { display: none; }
+    .poll__arrow { width: 44px; height: 44px; }
+    .insta { padding: 96px 0; }
+    .insta__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .ipost { padding: 10%; border-radius: var(--radius-md); }
+    .ipost__h { font-size: 17px; } .ipost__h--sm { font-size: 13px; } .ipost__big { font-size: 30px; }
+    .ipost__eyebrow { font-size: 10px; letter-spacing: 1px; }
+    .ipost__mark { width: 20px; height: 20px; }
+    .stories__grid > .scard { flex-basis: 86%; }
+    .stories__actions .ui-btn { display: none; }
     .scard { min-height: 0; }
     .manifesto { padding: 120px 0; }
     .finale { padding-top: 120px; }
@@ -246,7 +310,7 @@
 </div>
 
 <header class="site-head" id="head">
-  <a class="logo" href="./" aria-label="Upside India home">
+  <a class="logo" href="index.html" aria-label="Upside India home">
     <img class="std" src="assets/logos/upside-india-logo.svg" alt="">
     <img class="rev" src="assets/logos/upside-india-logo-reversed.svg" alt="">
     <img class="ink" src="assets/logos/upside-india-logo-mono-ink.svg" alt="">
@@ -263,7 +327,8 @@
     <li><a href="#work" data-ch="work"><span>What we do</span><i></i></a></li>
     <li><a href="#day" data-ch="day"><span>A day</span><i></i></a></li>
     <li><a href="#stories" data-ch="stories"><span>Stories</span><i></i></a></li>
-    <li><a href="#say" data-ch="say"><span>Your say</span><i></i></a></li>
+    <li><a href="#say" data-ch="say"><span>Poll</span><i></i></a></li>
+    <li><a href="#insta" data-ch="insta"><span>Instagram</span><i></i></a></li>
     <li><a href="#join" data-ch="join"><span>Join</span><i></i></a></li>
   </ol>
 </nav>
@@ -316,7 +381,7 @@
           <span class="eyebrow">Your voice</span>
           <h3>We take your voice to decision makers</h3>
           <p>Tell us which costs hurt most. We bring what you tell us to the officials, lawmakers and journalists who can change the rules.</p>
-          <a class="more" href="#say">Answer this week's question</a>
+          <a class="more" href="#say">Answer the poll</a>
         </article>
       </div>
     </div>
@@ -328,7 +393,7 @@
     <div class="journey__head">
       <div class="wrap">
         <span class="eyebrow" id="dayEyebrow">From first chai to the kitchen table</span>
-        <h2 id="dayTitle"><span class="l">A day of India's </span><span class="b">upside</span></h2>
+        <h2 id="dayTitle"><span class="l">Some of India's </span><span class="b">upside</span></h2>
       </div>
     </div>
     <div class="track" id="track">
@@ -490,9 +555,13 @@
           <span class="eyebrow">The upside so far</span>
           <h2>Rules that changed for the better</h2>
         </div>
-        <a class="ui-btn ui-btn--secondary" href="#">More on Instagram</a>
+        <div class="stories__actions">
+          <a class="ui-btn ui-btn--secondary" href="#">More on Instagram</a>
+          <button class="poll__arrow" type="button" id="storyPrev" aria-label="Previous stories"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <button class="poll__arrow" type="button" id="storyNext" aria-label="Next stories"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
       </div>
-      <div class="stories__grid">
+      <div class="stories__grid" id="storyTrack" aria-roledescription="carousel" aria-label="Rules that changed for the better">
         <article class="scard scard--green">
           <span class="eyebrow">Income tax · from April 2025</span>
           <h3>No income tax on the first ₹12 lakh</h3>
@@ -517,6 +586,14 @@
           <p class="src">Source: GST Council, via The News Minute</p>
           <a class="more" href="#">Read on Instagram</a>
         </article>
+        <article class="scard scard--green">
+          <span class="eyebrow">Excise tax · since 11 May 2026</span>
+          <h3>Drinks taxed by strength in Karnataka</h3>
+          <div class="num" aria-label="Excise slabs cut from 16 to 8"><span class="from">16</span><span class="to" data-count="8" data-from="16">8</span><span class="pct">slabs</span></div>
+          <p>Karnataka cut its excise slabs in half and now taxes drinks by strength: the lighter the drink, the lower the tax.</p>
+          <p class="src">Source: Dynamite News, 9 October 2026</p>
+          <a class="more" href="#">Read on Instagram</a>
+        </article>
       </div>
     </div>
   </section>
@@ -529,20 +606,81 @@
     </div>
   </div>
 
-  <!-- 6. Your say -->
-  <section class="poll" id="say" data-head="light">
+  <!-- 6. Upside India Poll: three questions in a carousel (front end only; connect a form service before launch) -->
+  <section class="poll" id="say" data-head="light" aria-roledescription="carousel" aria-label="Upside India Poll">
     <div class="wrap">
-      <span class="eyebrow">This week's question</span>
-      <h2><span class="l">What costs you more than </span><span class="b">it did five years ago?</span></h2>
-      <div class="chips" role="group" aria-label="Pick one">
-        <button class="chip" type="button" aria-pressed="false">Rent</button>
-        <button class="chip" type="button" aria-pressed="false">Fuel</button>
-        <button class="chip" type="button" aria-pressed="false">Groceries</button>
-        <button class="chip" type="button" aria-pressed="false">School fees</button>
-        <button class="chip" type="button" aria-pressed="false">Something else</button>
+      <div class="poll__head">
+        <span class="eyebrow">Upside India Poll</span>
+        <div class="poll__nav">
+          <span class="poll__count" aria-live="polite"><b id="pollNow">1</b> / 3</span>
+          <button class="poll__arrow" type="button" id="pollPrev" aria-label="Previous question"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <button class="poll__arrow" type="button" id="pollNext" aria-label="Next question"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
       </div>
-      <p class="poll__note" aria-live="polite"></p>
+      <div class="poll__track" id="pollTrack">
+        <div class="poll__slide" role="group" aria-roledescription="slide" aria-label="Question 1 of 3: cost of living">
+          <span class="poll__topic">Cost of living</span>
+          <h2><span class="l">What costs you more than </span><span class="b">it did five years ago?</span></h2>
+          <div class="chips" role="group" aria-label="Pick one">
+            <button class="chip" type="button" aria-pressed="false">Rent</button>
+            <button class="chip" type="button" aria-pressed="false">Fuel</button>
+            <button class="chip" type="button" aria-pressed="false">Groceries</button>
+            <button class="chip" type="button" aria-pressed="false">School fees</button>
+            <button class="chip" type="button" aria-pressed="false">Something else</button>
+          </div>
+          <p class="poll__note" aria-live="polite"></p>
+        </div>
+        <div class="poll__slide" role="group" aria-roledescription="slide" aria-label="Question 2 of 3: excise tax">
+          <span class="poll__topic">Excise tax</span>
+          <h2><span class="l">Should every state tax drinks </span><span class="b">by their strength?</span></h2>
+          <p class="poll__context">Karnataka does it now: the lighter the drink, the lower the tax.</p>
+          <div class="chips" role="group" aria-label="Pick one">
+            <button class="chip" type="button" aria-pressed="false">Yes</button>
+            <button class="chip" type="button" aria-pressed="false">No</button>
+            <button class="chip" type="button" aria-pressed="false">Not sure</button>
+          </div>
+          <p class="poll__note" aria-live="polite"></p>
+        </div>
+        <div class="poll__slide" role="group" aria-roledescription="slide" aria-label="Question 3 of 3: getting around">
+          <span class="poll__topic">Getting around</span>
+          <h2><span class="l">Should bike taxis be allowed </span><span class="b">in your city?</span></h2>
+          <p class="poll__context">They're cheap and quick, but some states have restricted them.</p>
+          <div class="chips" role="group" aria-label="Pick one">
+            <button class="chip" type="button" aria-pressed="false">Yes</button>
+            <button class="chip" type="button" aria-pressed="false">No</button>
+            <button class="chip" type="button" aria-pressed="false">Not sure</button>
+          </div>
+          <p class="poll__note" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="poll__dots" role="tablist" aria-label="Choose a question">
+        <button type="button" role="tab" aria-selected="true" aria-label="Question 1"></button>
+        <button type="button" role="tab" aria-selected="false" aria-label="Question 2"></button>
+        <button type="button" role="tab" aria-selected="false" aria-label="Question 3"></button>
+      </div>
       <blockquote class="poll__quote">We read the answers, and the most common ones shape what we look at <strong>next</strong>.<cite>The Upside India team</cite></blockquote>
+    </div>
+  </section>
+
+  <!-- 6b. Instagram feed: Instagram is the campaign's blog. Set data-feed-url to a JSON feed (e.g. Behold.so) to show live posts. -->
+  <section class="insta" id="insta" data-head="light" data-feed-url="" data-profile-url="#">
+    <div class="wrap">
+      <div class="insta__head">
+        <div>
+          <span class="eyebrow">On Instagram</span>
+          <h2><span class="l">The latest from </span><span class="b">Upside India</span></h2>
+          <p class="insta__lede">Every story, explainer and poll result lives on our Instagram.</p>
+        </div>
+        <a class="ui-btn ui-btn--secondary insta__follow" href="#">See all posts</a>
+      </div>
+      <div class="insta__grid" id="instaGrid">
+        <a class="ipost ipost--green" href="#"><span class="ipost__eyebrow">Good news</span><span class="ipost__h"><span class="l">Paying for chai takes </span><span class="b">two seconds</span></span><span class="ipost__mark"></span></a>
+        <a class="ipost ipost--cream" href="#"><span class="ipost__eyebrow">Smarter rules</span><span class="ipost__big">16 → 8</span><span class="ipost__h ipost__h--sm"><span class="l">Karnataka's excise slabs, </span><span class="b">cut in half</span></span><span class="ipost__mark"></span></a>
+        <a class="ipost ipost--marigold" href="#"><span class="ipost__eyebrow">Upside India Poll</span><span class="ipost__h"><span class="l">What costs you more than </span><span class="b">five years ago?</span></span><span class="ipost__mark"></span></a>
+        <a class="ipost ipost--cream" href="#"><span class="ipost__eyebrow">Income tax</span><span class="ipost__big">₹12 lakh</span><span class="ipost__h ipost__h--sm"><span class="l">earned before you pay </span><span class="b">any income tax</span></span><span class="ipost__mark"></span></a>
+        <a class="ipost ipost--green" href="#"><span class="ipost__eyebrow">Insurance</span><span class="ipost__h"><span class="l">Health and life cover, </span><span class="b">now tax-free</span></span><span class="ipost__mark"></span></a>
+        <a class="ipost ipost--green" href="#"><span class="ipost__eyebrow">Home</span><span class="ipost__big">50 lakh+</span><span class="ipost__h ipost__h--sm"><span class="l">homes on </span><span class="b">rooftop solar</span></span><span class="ipost__mark"></span></a>
+      </div>
     </div>
   </section>
 
@@ -553,14 +691,14 @@
       <p class="finale__lede">Short, sourced and on your side. New posts every week on what everyday life costs, and the rules that could make it cheaper.</p>
       <div class="finale__actions">
         <a class="ui-btn ui-btn--primary" href="#">Follow on Instagram</a>
-        <a class="ui-btn ui-btn--secondary" href="#">About us</a>
+        <a class="ui-btn ui-btn--secondary" href="about/index.html">About us</a>
       </div>
-      <ul class="channels">
-        <li><a href="#"><b>Instagram</b><span>Reels, carousels and polls</span></a></li>
-        <li><a href="#"><b>YouTube</b><span>Short explainers</span></a></li>
-        <li><a href="#"><b>Facebook</b><span>Our posts, for Facebook</span></a></li>
-        <li><a href="#"><b>X</b><span>Data and debate</span></a></li>
-        <li><a href="#"><b>LinkedIn</b><span>For people who work on policy</span></a></li>
+      <ul class="channels" aria-label="Upside India on social media">
+        <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a></li>
+        <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg><span>YouTube</span></a></li>
+        <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h-2a4 4 0 0 0-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2z"/></svg><span>Facebook</span></a></li>
+        <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l16 16M20 4L4 20"/></svg><span>X</span></a></li>
+        <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg><span>LinkedIn</span></a></li>
       </ul>
     </div>
     <div class="signoff" aria-hidden="true">
@@ -573,7 +711,7 @@
           <img src="assets/logos/upside-india-logo-reversed.svg" alt="Upside India">
           <p>An independent consumer organisation working on regulation and the cost of living in India.</p>
         </div>
-        <nav aria-label="Footer"><a href="#work">What we do</a><a href="#">How we work</a><a href="#">Contact</a><a href="#">Privacy</a></nav>
+        <nav aria-label="Footer"><a href="#work">What we do</a><a href="about/index.html">About us</a><a href="about/index.html#faq">FAQ</a><a href="contact/index.html">Contact</a><a href="#">Privacy</a></nav>
       </div>
     </div>
   </section>
@@ -584,12 +722,64 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 (() => {
-  // Poll works with or without motion (front-end only; connect a form service before launch)
-  const chips = document.querySelectorAll('.chip'), note = document.querySelector('.poll__note');
-  chips.forEach(c => c.addEventListener('click', () => {
-    chips.forEach(o => o.setAttribute('aria-pressed', o === c ? 'true' : 'false'));
-    note.textContent = "Thanks. We'll share what everyone said on Instagram.";
-  }));
+  // ----- Stories carousel: arrows move one card; arrows switch off at the ends -----
+  const sTrack = document.getElementById('storyTrack'), sPrev = document.getElementById('storyPrev'), sNext = document.getElementById('storyNext');
+  const cardStep = () => { const c = sTrack.querySelector('.scard'); return c ? c.getBoundingClientRect().width + 24 : sTrack.clientWidth; };
+  const sUpdate = () => { sPrev.disabled = sTrack.scrollLeft < 4; sNext.disabled = sTrack.scrollLeft + sTrack.clientWidth >= sTrack.scrollWidth - 4; };
+  sPrev.addEventListener('click', () => sTrack.scrollBy({ left: -cardStep(), behavior: 'smooth' }));
+  sNext.addEventListener('click', () => sTrack.scrollBy({ left: cardStep(), behavior: 'smooth' }));
+  sTrack.addEventListener('scroll', () => requestAnimationFrame(sUpdate), { passive: true });
+  addEventListener('resize', sUpdate); sUpdate();
+
+  // ----- Poll carousel: works with or without motion (front end only; connect a form service before launch) -----
+  const track = document.getElementById('pollTrack');
+  const slides = [...track.querySelectorAll('.poll__slide')];
+  const dotsP = [...document.querySelectorAll('.poll__dots button')];
+  const prevB = document.getElementById('pollPrev'), nextB = document.getElementById('pollNext'), nowEl = document.getElementById('pollNow');
+  let current = 0;
+  const goTo = i => { i = Math.max(0, Math.min(slides.length - 1, i)); track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' }); setCurrent(i); };
+  const setCurrent = i => {
+    current = i; nowEl.textContent = i + 1;
+    dotsP.forEach((d, k) => d.setAttribute('aria-selected', k === i ? 'true' : 'false'));
+    slides.forEach((s, k) => { s.inert = k !== i; s.setAttribute('aria-hidden', k === i ? 'false' : 'true'); });
+    prevB.disabled = i === 0; nextB.disabled = i === slides.length - 1;
+  };
+  prevB.addEventListener('click', () => goTo(current - 1));
+  nextB.addEventListener('click', () => goTo(current + 1));
+  dotsP.forEach((d, k) => d.addEventListener('click', () => goTo(k)));
+  let st;
+  track.addEventListener('scroll', () => { clearTimeout(st); st = setTimeout(() => { const i = Math.round(track.scrollLeft / track.clientWidth); if (i !== current) setCurrent(i); }, 80); }, { passive: true });
+  slides.forEach((slide, k) => {
+    const chips = slide.querySelectorAll('.chip'), note = slide.querySelector('.poll__note');
+    chips.forEach(c => c.addEventListener('click', () => {
+      chips.forEach(o => o.setAttribute('aria-pressed', o === c ? 'true' : 'false'));
+      const next = slides.findIndex((s, j) => j > k && !s.querySelector('[aria-pressed="true"]'));
+      note.textContent = next > -1 ? "Thanks. Next question coming up." : "Thanks. We'll share what everyone said on Instagram.";
+      if (next > -1) setTimeout(() => { if (current === k) goTo(next); }, 1200);
+    }));
+  });
+  setCurrent(0);
+
+  // ----- Instagram feed: shows live posts when data-feed-url points to a JSON feed (e.g. Behold.so); otherwise keeps the example posts -----
+  (async () => {
+    const sec = document.getElementById('insta'), url = sec.dataset.feedUrl, profile = sec.dataset.profileUrl;
+    if (profile && profile !== '#') sec.querySelectorAll('.insta__follow, .ipost').forEach(a => a.href = profile);
+    if (!url) return;
+    try {
+      const res = await fetch(url); if (!res.ok) throw new Error(res.status);
+      const data = await res.json();
+      const posts = (Array.isArray(data) ? data : (data.posts || data.data || [])).slice(0, 6);
+      if (!posts.length) return;
+      const grid = document.getElementById('instaGrid'); grid.textContent = '';
+      posts.forEach(p => {
+        const a = document.createElement('a'); a.className = 'ipost ipost--live'; a.href = p.permalink || profile; a.target = '_blank'; a.rel = 'noopener';
+        const img = document.createElement('img'); img.loading = 'lazy';
+        img.src = (p.sizes && p.sizes.medium && p.sizes.medium.mediaUrl) || p.thumbnailUrl || p.thumbnail_url || p.mediaUrl || p.media_url;
+        img.alt = (p.prunedCaption || p.caption || 'Upside India on Instagram').slice(0, 140);
+        a.append(img); grid.append(a);
+      });
+    } catch (e) { /* keep the example posts */ }
+  })();
 
   // Header colour + chapter dots, driven by which section is under the header
   const head = document.getElementById('head'), dots = document.getElementById('chapters');
@@ -725,6 +915,10 @@
     // ----- 6. Poll -----
     gsap.from('.poll h2 span', { yPercent: 40, opacity: 0, filter: 'blur(10px)', stagger: .12, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.poll', start: 'top 70%' } });
     gsap.from('.chip', { y: 30, opacity: 0, stagger: .06, duration: .7, ease: 'back.out(1.6)', scrollTrigger: { trigger: '.chips', start: 'top 85%' } });
+
+    // ----- 6b. Instagram: posts pop in like a feed loading -----
+    gsap.from('.insta h2 span', { yPercent: 40, opacity: 0, filter: 'blur(10px)', stagger: .12, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.insta', start: 'top 70%' } });
+    gsap.from('#instaGrid > *', { y: 50, scale: .94, opacity: 0, stagger: { each: .08, grid: 'auto', from: 'start' }, duration: .8, ease: 'power3.out', scrollTrigger: { trigger: '#instaGrid', start: 'top 85%' } });
 
     // ----- 7. Finale: the sun comes up again -----
     gsap.from('.finale h2 span', { yPercent: 50, opacity: 0, filter: 'blur(12px)', stagger: .12, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: '.finale', start: 'top 65%' } });

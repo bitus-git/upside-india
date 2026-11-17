@@ -1,12 +1,15 @@
-# Upside India: homepage draft
+# Upside India: website draft
 
-Draft homepage for Upside India, an independent consumer organisation working on growth, a lower cost of living and more freedom for consumers in India. This version is for partner review, not launch.
+Draft website for Upside India, an independent consumer organisation working on growth, a lower cost of living and more freedom for consumers in India. This version is for partner review, not launch.
 
 ## What's here
 
 | Path | What it is |
 | --- | --- |
 | `index.html` | The homepage: one self-contained page with its own styles and animation script |
+| `about/index.html` | About us: mission, what we do, the five rules we follow, and FAQ (who funds us is the last question) |
+| `contact/index.html` | Contact: one form, with a dropdown for the reason (general question, press and media, and so on) |
+| `assets/css/pages.css`, `assets/js/pages.js` | Shared styles and script for the About and Contact pages (no libraries) |
 | `assets/css/` | Brand tokens (`tokens.css`) and components (`components.css`) from the Upside India brand kit |
 | `assets/fonts/` | Mukta Light, Regular, SemiBold and ExtraBold (Latin, WOFF2), with the SIL Open Font License |
 | `assets/logos/` | Logo files from the brand kit (SVG) |
@@ -19,13 +22,32 @@ The page loads two animation libraries from the cdnjs and jsDelivr CDNs: GSAP 3.
 1. **Opening:** "Look on the upside". The logo builds itself, then the sun rises and grows to fill the screen.
 2. **Reporting the good news. Arguing for the upside.** The mission statement, lit word by word as you scroll.
 3. **What we do:** three pillars (good news, smarter rules, your voice).
-4. **A day of India's upside:** a sideways scroll from 6:00 to 21:00 while the sun crosses the sky. Six sourced wins: UPI, metro and ride apps, mobile data, GST, Karnataka excise, rooftop solar.
-5. **The upside so far:** three rule changes (income tax, insurance, medicines), each linking to Instagram.
+4. **Some of India's upside:** a sideways scroll from 6:00 to 21:00 while the sun crosses the sky. Six sourced wins: UPI, metro and ride apps, mobile data, GST, Karnataka excise, rooftop solar.
+5. **The upside so far:** a carousel of four rule changes (income tax, insurance, medicines, Karnataka excise), each linking to Instagram.
 6. **Scrolling band** of everyday costs.
-7. **This week's question:** a poll (front end only for now).
-8. **Follow the upside:** channels, then the logo sign-off and the footer.
+7. **Upside India Poll:** a carousel of three questions (cost of living, excise tax, bike taxis). Answering moves to the next question. Front end only for now.
+8. **On Instagram:** a grid of the latest six posts, since Instagram is the campaign's blog. Shows example posts until a feed is connected (see below).
+9. **Follow the upside:** channels, then the logo sign-off and the footer.
 
 Instagram is the blog. Story links point to Instagram posts, not to pages on this site.
+
+## Connect the Instagram feed
+
+A static site can't call Instagram directly without exposing an access token, so the page reads a JSON feed from a feed service instead. [Behold](https://behold.so) works well and has a free plan.
+
+1. Connect the Upside India Instagram account to Behold (it needs to be a Business or Creator account) and create a JSON feed.
+2. In `index.html`, find `<section class="insta" id="insta"` and fill in two attributes:
+   - `data-feed-url="https://feeds.behold.so/<your-feed-id>"`
+   - `data-profile-url="https://www.instagram.com/<handle>/"`
+3. Publish. The six newest posts replace the example tiles, each linking to its post on Instagram. If the feed ever fails to load, the example tiles stay.
+
+## Connect the contact form
+
+The form checks its fields in the browser, but it needs a form service to deliver messages. [Formspree](https://formspree.io) has a free plan.
+
+1. Create a form in Formspree and copy its endpoint, for example `https://formspree.io/f/abcdwxyz`.
+2. In `contact/index.html`, set it on the form: `<form class="form reveal" id="contactForm" data-endpoint="https://formspree.io/f/abcdwxyz" novalidate>`.
+3. Until it is set, the form says the message was not sent and asks people to email instead.
 
 ## Publish on GitHub Pages
 
@@ -55,7 +77,12 @@ This page carries `<meta name="robots" content="noindex, nofollow">`, so search 
 
 - [ ] Links for Instagram, YouTube, Facebook, X and LinkedIn (all `href="#"` for now), plus the "About us", "How we work", "Contact" and "Privacy" pages
 - [ ] Instagram post links for each "Read on Instagram" card and the "More on Instagram" button
-- [ ] A form service for the poll, with a privacy notice. Today the answer buttons only show a thank-you message and nothing is saved.
+- [ ] A form service for the three poll questions, with a privacy notice. Today the answer buttons only show a thank-you message and nothing is saved.
+- [ ] The Instagram feed URL and profile link (see "Connect the Instagram feed")
+- [ ] The contact form endpoint (see "Connect the contact form")
+- [ ] About page: the "We speak your language" promise (Hindi, Kannada, Marathi) marked "to confirm", and the privacy notice link in the FAQ
+- [ ] Contact page: the privacy notice link under the form
+- [ ] Remove the `noindex` line from all three pages at launch
 - [ ] "See our first issue" points to the stories section until the tax-by-strength explainer exists (planned for 14 December)
 - [ ] Live source links next to each figure
 - [ ] Real, licensed photography or final illustrations in place of the placeholder drawings
